@@ -1,0 +1,38 @@
+{
+  "name": "windows-get-apps",
+  "version": "1.0.0",
+  "description": "windows get apps",
+  "source": "src/index.js",
+  "main": "dist/windows-get-apps.js",
+  "module": "dist/windows-get-apps.mjs",
+  "umd:main": "dist/windows-get-apps.umd.js",
+  "scripts": {
+    "before": "rimraf dist",
+    "build": "npm run before && microbundle --sourcemap false && npm run doc",
+    "doc": "jsdoc2md --template doc.hbs src/index.js > README.md",
+    "lint-staged": "lint-staged",
+    "start": "npm run before && microbundle watch"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "*.js": "pretty-quick"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "extract-file-icon": "^0.3.2",
+    "fs-promise": "git+https://github.com/pashangshangpo/fs-promise.git"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^6.0.1",
+    "lint-staged": "^8.1.0",
+    "microbundle": "^0.9.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0",
+    "rimraf": "^2.6.2"
+  }
+}
