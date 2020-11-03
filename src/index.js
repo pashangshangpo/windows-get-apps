@@ -34,7 +34,9 @@ const getApps = async (appDirs, appExts, outPath) => {
 
   for (let filePath of appFiles) {
     const iconName = path.basename(filePath).replace(path.extname(filePath), '')
-    const appIconPath = outPath ? path.resolve(outPath, iconName + '.png') : path.resolve('.', 'apps', iconName + '.png')
+    const appIconPath = outPath
+      ? path.resolve(outPath, iconName + '.png')
+      : path.resolve('.', 'apps', iconName + '.png')
 
     apps.push({
       name: iconName,
@@ -55,7 +57,9 @@ const getApps = async (appDirs, appExts, outPath) => {
 
 export const getApp = async (filePath, outPath) => {
   const iconName = path.basename(filePath).replace(path.extname(filePath), '')
-  const appIconPath = outPath ? path.resolve(outPath, iconName + '.png') : path.resolve('.', 'apps', iconName + '.png')
+  const appIconPath = outPath
+    ? path.resolve(outPath, iconName + '.png')
+    : path.resolve('.', 'apps', iconName + '.png')
 
   if (!(await exists(appIconPath))) {
     await writeFile(appIconPath, fileIcon(filePath, 32))
