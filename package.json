@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "extract-file-icon": "^0.3.2",
-    "fs-promise": "git+https://github.com/pashangshangpo/fs-promise.git"
+    "fs-promise": "https://github.com/pashangshangpo/fs-promise.git"
   },
   "devDependencies": {
     "jsdoc-to-markdown": "^6.0.1",

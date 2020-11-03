@@ -1,29 +1,6 @@
 const path = require('path')
-const { readdir, writeFile, isDir, exists } = require('fs-promise')
+const { readFilePaths, writeFile, exists } = require('fs-promise')
 const fileIcon = require("extract-file-icon")
-
-const getFiles = async (dir, filter) => {
-    const files = await readdir(dir)
-    const paths = []
-
-    for (let file of files) {
-        const filePath = path.join(dir, file)
-
-        if (await isDir(filePath)) {
-            paths.push(...(await getFiles(filePath, filter)))
-
-            continue
-        }
-
-        if (filter && await filter(filePath) === false) {
-            continue
-        }
-
-        paths.push(filePath)
-    }
-
-    return paths
-}
 
 const getAppFiles = async (appDirs, appExts) => {
     const filesPromise = []
@@ -31,7 +8,7 @@ const getAppFiles = async (appDirs, appExts) => {
 
     for (let appDir of appDirs) {
         filesPromise.push(
-            getFiles(appDir, filePath => {
+            readFilePaths(appDir, filePath => {
                 return appExts.includes(path.extname(filePath))
             })
         )
@@ -57,7 +34,7 @@ const getApps = async (appDirs, appExts) => {
 
     for (let filePath of appFiles) {
         const iconName = path.basename(filePath).replace(path.extname(filePath), '')
-        const appIconPath = path.resolve('.', 'apps', iconName + '.png').replace(/\\/g, '/')
+        const appIconPath = path.resolve('.', 'apps', iconName + '.png')
 
         apps.push({
             name: iconName,
