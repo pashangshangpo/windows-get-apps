@@ -53,6 +53,20 @@ const getApps = async (appDirs, appExts) => {
   return apps
 }
 
+export const getApp = async filePath => {
+  const iconName = path.basename(filePath).replace(path.extname(filePath), '')
+  const appIconPath = path.resolve('.', 'apps', iconName + '.png')
+
+  if (!(await exists(appIconPath))) {
+    await writeFile(appIconPath, fileIcon(filePath, 32))
+  }
+
+  return {
+    name: iconName,
+    icon: appIconPath,
+  }
+}
+
 export default (dirs = [], exts = []) => {
   const appExts = ['.appref-ms', '.exe', '.lnk', '.bat', '.url']
   const appDirs = [
