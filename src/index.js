@@ -41,6 +41,7 @@ const getApps = async (appDirs, appExts, outPath) => {
     apps.push({
       name: iconName,
       icon: appIconPath,
+      path: filePath,
     })
 
     if (await exists(appIconPath)) {
@@ -68,6 +69,7 @@ export const getApp = async (filePath, outPath) => {
   return {
     name: iconName,
     icon: appIconPath,
+    path: filePath,
   }
 }
 
