@@ -27,14 +27,14 @@ const getAppFiles = async (appDirs, appExts) => {
   return files
 }
 
-const getApps = async (appDirs, appExts) => {
+const getApps = async (appDirs, appExts, outPath) => {
   const appFiles = await getAppFiles(appDirs, appExts)
   const apps = []
   const appIconsPromise = []
 
   for (let filePath of appFiles) {
     const iconName = path.basename(filePath).replace(path.extname(filePath), '')
-    const appIconPath = path.resolve('.', 'apps', iconName + '.png')
+    const appIconPath = outPath ? path.resolve(outPath, iconName + '.png') : path.resolve('.', 'apps', iconName + '.png')
 
     apps.push({
       name: iconName,
@@ -53,9 +53,9 @@ const getApps = async (appDirs, appExts) => {
   return apps
 }
 
-export const getApp = async filePath => {
+export const getApp = async (filePath, outPath) => {
   const iconName = path.basename(filePath).replace(path.extname(filePath), '')
-  const appIconPath = path.resolve('.', 'apps', iconName + '.png')
+  const appIconPath = outPath ? path.resolve(outPath, iconName + '.png') : path.resolve('.', 'apps', iconName + '.png')
 
   if (!(await exists(appIconPath))) {
     await writeFile(appIconPath, fileIcon(filePath, 32))
@@ -67,7 +67,7 @@ export const getApp = async filePath => {
   }
 }
 
-export default (dirs = [], exts = []) => {
+export default (outPath = '', dirs = [], exts = []) => {
   const appExts = ['.appref-ms', '.exe', '.lnk', '.bat', '.url']
   const appDirs = [
     'C:\\Users\\Default\\Links',
@@ -89,5 +89,5 @@ export default (dirs = [], exts = []) => {
     }
   }
 
-  return getApps(appDirs, appExts)
+  return getApps(appDirs, appExts, outPath)
 }

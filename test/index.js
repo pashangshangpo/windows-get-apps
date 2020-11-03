@@ -1,3 +1,3 @@
-const getApps = require('../dist/windows-get-apps')
+const getApps = require('../dist/windows-get-apps').default
 
 getApps().then(console.log)
